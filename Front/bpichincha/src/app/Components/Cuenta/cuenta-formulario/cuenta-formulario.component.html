@@ -1,0 +1,31 @@
+<form [formGroup]="cuentaForm" (ngSubmit)="guardarCuenta()">
+    <h2>{{ editar ? 'Editar Cuenta' : 'Nueva Cuenta' }}</h2>
+  
+    <label>Número de Cuenta:</label>
+    <input type="text" formControlName="numeroCuenta" required />
+  
+    <label>Tipo de Cuenta:</label>
+    <select formControlName="tipoCuenta">
+      <option *ngFor="let tipo of tiposCuenta" [value]="tipo">{{ tipo }}</option>
+    </select>
+
+    <br/>
+    <br/>
+
+    <label>Saldo Inicial:</label>
+    <input type="number" formControlName="saldoInicial" required />
+  
+    <label>Estado:</label>
+    <input type="checkbox" formControlName="estado" />
+
+    <label>Cliente:</label>
+    <select formControlName="cliente">
+        <option *ngFor="let cliente of clientes" [ngValue]="cliente">
+        {{ cliente.nombre }}
+        </option>
+    </select>
+  
+    <button type="submit" [disabled]="cuentaForm.invalid">Guardar</button>
+    <button type="button" (click)="router.navigate(['/cuentas'])">Cancelar</button>
+  </form>
+  

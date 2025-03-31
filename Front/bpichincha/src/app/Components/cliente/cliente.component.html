@@ -1,0 +1,38 @@
+<h2>Clientes</h2>
+
+<div class="busqueda">
+  <input class="cajaBuscar" type="text" [(ngModel)]="filtro" placeholder="Buscar cliente..." />
+  <button class="btnNuevo" [routerLink]="['/clientes/nuevo']">Nuevo</button>
+</div>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Identificación</th>
+      <th>Dirección</th>
+      <th>Telefono</th>
+      <th>Estado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (cliente of filtrarClientes(); track cliente.id) {
+      <tr>
+        <td>{{ cliente.nombre }}</td>
+        <td>{{ cliente.identificacion }}</td>
+        <td>{{ cliente.direccion }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td>{{ cliente.estado ? 'Activo' : 'Inactivo'}}</td>
+        <td>
+          <button (click)="eliminarCliente(cliente.id)">🗑️ Eliminar</button>
+          <button [routerLink]="['/clientes/editar', cliente.id]">✏️ Editar</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+
+

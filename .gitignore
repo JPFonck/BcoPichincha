@@ -1,0 +1,22 @@
+# Node.js
+node_modules/
+dist/
+.env
+
+# Angular
+**/bpichincha/.angular/cache
+**/bpichincha/.angular/config.json
+
+# Java
+**/target/
+*.log
+
+# IntelliJ
+*.iml
+.idea/
+
+# VSCode
+.vscode/
+
+# Docker
+db_data/

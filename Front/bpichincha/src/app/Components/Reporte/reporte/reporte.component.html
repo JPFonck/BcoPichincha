@@ -1,0 +1,59 @@
+<div class="busqueda-container">
+    <h2>Reportes</h2>
+  
+    <!-- Formulario de búsqueda -->
+    <form [formGroup]="busquedaForm" (ngSubmit)="buscarMovimientos()">
+      <label>Cliente:</label>
+      <select formControlName="clienteId">
+        <option *ngFor="let cliente of clientes" [value]="cliente.id">
+          {{ cliente.nombre }}
+        </option>
+      </select>
+  
+      <label>Fecha Inicio:</label>
+      <input type="date" formControlName="fechaInicio">
+  
+      <label>Fecha Fin:</label>
+      <input type="date" formControlName="fechaFin">
+  
+      <button type="submit" [disabled]="busquedaForm.invalid">Buscar</button>
+    </form>
+  
+    <!-- Resultados -->
+    <div *ngIf="movimientos.length > 0">
+      <h3>Resultados</h3>
+
+
+        <button class="btnDescargarReporte" (click)="descargarReportePdf()">📄 Descargar Reporte PDF</button>
+  
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Cliente</th>
+            <th>Número de Cuenta</th>
+            <th>Tipo Cuenta</th>
+            <th>Saldo Inicial</th>
+            <th>Movimiento</th>
+            <th>Saldo Disponible</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mov of movimientos">
+            <td>{{ mov.fecha | date:'yyyy-MM-dd' }}</td>
+            <td>{{ mov.cuenta.cliente.nombre }}</td>
+            <td>{{ mov.cuenta.numeroCuenta }}</td>
+            <td>{{ mov.cuenta.tipoCuenta }}</td>
+            <td>${{ mov.saldo }}</td>
+            <td>${{ mov.valor }}</td>
+            <td>${{ mov.cuenta.saldoInicial }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <div *ngIf="movimientos.length === 0 && busquedaForm.valid">
+      <p>No se encontraron movimientos en el rango seleccionado.</p>
+    </div>
+  </div>
+  

@@ -1,0 +1,34 @@
+<h2>Cuentas</h2>
+
+<div class="busqueda">
+  <input class="cajaBuscar" type="text" [(ngModel)]="filtro" placeholder="Buscar cuenta..." />
+  <button class="btnNuevo" [routerLink]="['/cuentas/nueva']">Nuevo</button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Número de Cuenta</th>
+      <th>Tipo</th>
+      <th>Saldo Inicial</th>
+      <th>Estado</th>
+      <th>Cliente</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (cuenta of filtrarCuentas(); track cuenta.id) {
+        <tr>
+            <td>{{ cuenta.numeroCuenta }}</td>
+            <td>{{ cuenta.tipoCuenta }}</td>
+            <td>{{ cuenta.saldoInicial }}</td>
+            <td>{{ cuenta.estado ? 'Activo' : 'Inactivo' }}</td>
+            <td>{{ cuenta.cliente.nombre }}</td>
+            <td>
+            <button (click)="eliminarCuenta(cuenta.id)">🗑️ Eliminar</button>
+            <button [routerLink]="['/cuentas/editar', cuenta.id]">✏️ Editar</button>
+            </td>
+        </tr>
+    }
+  </tbody>
+</table>

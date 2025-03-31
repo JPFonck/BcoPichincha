@@ -1,0 +1,45 @@
+<form [formGroup]="clienteForm" (ngSubmit)="guardarCliente()">
+  <h2>{{ editar ? 'Editar Cliente' : 'Nuevo Cliente' }}</h2>
+
+  <label>Nombre:</label>
+  <input type="text" formControlName="nombre" required />
+  <div class="alerta" *ngIf="clienteForm.controls['nombre'].invalid && clienteForm.controls['nombre'].touched">
+    Nombre es obligatorio (mínimo 3 caracteres).
+  </div>
+
+  <label>Contraseña:</label>
+  <input type="password" formControlName="contrasena" required />
+  <div class="alerta" *ngIf="clienteForm.controls['contrasena'].invalid && clienteForm.controls['contrasena'].touched">
+    Contraseña es obligatoria.
+  </div>
+
+  <label>Dirección:</label>
+  <input type="text" formControlName="direccion" required />
+
+  <label>Edad:</label>
+  <input type="number" formControlName="edad" required />
+  <div class="alerta" *ngIf="clienteForm.controls['edad'].invalid && clienteForm.controls['edad'].touched">
+    La edad es obligatoria.
+  </div>
+
+  <label>Estado:</label>
+  <input type="checkbox" formControlName="estado" />
+
+  <label>Género:</label>
+  <select formControlName="genero">
+    <option value="Masculino">Masculino</option>
+    <option value="Femenino">Femenino</option>
+  </select>
+
+  <label>Identificación:</label>
+  <input type="text" formControlName="identificacion" required />
+
+  <label>Teléfono:</label>
+  <input type="text" formControlName="telefono" required />
+  <div class="alerta" *ngIf="clienteForm.controls['telefono'].invalid && clienteForm.controls['telefono'].touched">
+    Teléfono es obligarotio y debe contener solo números.
+  </div>
+
+  <button type="submit" [disabled]="clienteForm.invalid">Guardar</button>
+  <button type="button" (click)="router.navigate(['/clientes'])">Cancelar</button>
+</form>

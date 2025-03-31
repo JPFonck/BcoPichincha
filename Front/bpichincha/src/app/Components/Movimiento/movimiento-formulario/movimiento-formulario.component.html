@@ -1,0 +1,25 @@
+<form [formGroup]="movimientoForm" (ngSubmit)="guardarMovimiento()">
+    <h2>{{ editar ? 'Editar Cuenta' : 'Nueva Cuenta' }}</h2>
+
+    <label for="fecha">Fecha:</label>
+    <input id="fecha" formControlName="fecha" type="date" required />
+  
+    <label for="tipoMovimiento">Tipo de Movimiento:</label>
+    <select id="tipoMovimiento" formControlName="tipoMovimiento">
+      <option *ngFor="let tipo of tiposMovimiento" [value]="tipo">{{ tipo }}</option>
+    </select>
+  
+    <label for="valor">Valor:</label>
+    <input id="valor" formControlName="valor" type="number" required />
+  
+    <label for="cuenta">Cuenta:</label>
+    <select id="cuenta" formControlName="cuenta">
+      <option *ngFor="let cuenta of cuentas" [ngValue]="cuenta">
+        {{ cuenta.numeroCuenta }}
+      </option>
+    </select>
+  
+    <button type="submit" [disabled]="movimientoForm.invalid">Guardar</button>
+    <button type="button" (click)="router.navigate(['/cuentas'])">Cancelar</button>
+  </form>
+  

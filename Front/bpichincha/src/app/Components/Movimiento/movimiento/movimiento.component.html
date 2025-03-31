@@ -1,0 +1,32 @@
+<h2>Movimientos</h2>
+
+<div class="busqueda">
+    <input class="cajaBuscar" type="text" [(ngModel)]="filtro" placeholder="Buscar" />
+    <button class="btnNuevo" [routerLink]="['/movimientos/nuevo']">Nuevo</button>
+</div>
+
+<table>
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Cuenta</th>
+        <th>Saldo Inicial</th>
+        <th>Tipo</th>
+        <th>Valor</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let movimiento of movimientos">
+        <td>{{ movimiento.fecha | date }}</td>
+        <td>{{ movimiento.cuenta.numeroCuenta }}</td>
+        <td>{{ movimiento.saldo | currency }}</td>
+        <td>{{ movimiento.tipoMovimiento }}</td>
+        <td>{{ movimiento.valor | currency }}</td>
+        <td>
+        <button (click)="eliminarMovimiento(movimiento.id)">🗑️ Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  

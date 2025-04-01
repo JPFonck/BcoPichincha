@@ -1,0 +1,11 @@
+node_modules
+.git
+.gitignore
+Dockerfile
+README.md
+*.log
+.env
+.vscode
+jest.config.js
+setup-jest.ts
+coverage

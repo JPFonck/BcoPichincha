@@ -1,40 +1,54 @@
 version: '3.8'
 
 services:
-
-  db:
-    image: mysql:8.0
-    container_name: mysql-db
-    restart: always
+  mysql:
+    image: mysql:8
+    container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: bpichincha
-      MYSQL_USER: root
-      MYSQL_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: bcopichincha
     ports:
       - "3306:3306"
     volumes:
-      - db_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-net
 
   backend:
-    build: ./microservicios
-    container_name: spring-backend
+    build:
+      context: ./microservicios
+    container_name: backend
     ports:
       - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/bcopichincha
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/bcopichincha
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: admin
-    depends_on:
-      - db
+    networks:
+      - app-net
 
   frontend:
-    build: ./Front/bpichincha
-    container_name: angular-frontend
+    build:
+      context: ./Front/bpichincha
+    container_name: frontend
     ports:
       - "4200:80"
     depends_on:
       - backend
+    networks:
+      - app-net
 
 volumes:
-  db_data:
+  mysql_data:
+
+networks:
+  app-net:
+    driver: bridge
